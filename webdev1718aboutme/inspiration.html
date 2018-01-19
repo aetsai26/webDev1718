@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>One True Page</title>
+        <link type="text/css" rel="stylesheet" href="yaint.css">
+         <link type="text/css" rel="stylesheet" href="yaint.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <ul class='nav'>
+            <li class='nav_button'><a href="home.html">home</a></li>
+            <li class='nav_button'><a href="inspiration.html">Computer Science</a></li>
+            <li class='nav_button'><a href="DIY.html">Journal</a></li>
+            <li class='nav_button'><a href="lacrosse.html">Lacrosse</a></li>
+        </ul>
+        <h1>COMPUTER SCIENCE</h1>
+    </head>
+    <body>
+      <script>
+        var button = document.createElement("button");
+        button.appendChild(document.createTextNode("merchandise (click image)"));
+        document.body.appendChild(button);
+        button.addEventListener('click', function (){
+          var img=document.createElement("img");
+          var a = document.createElement("a");
+          a.appendChild(img);
+          a.href="https://squareup.com/store/lane-tech-computer-science-booster-club";
+          a.target="_blank";
+          img.src="https://pbs.twimg.com/profile_images/768958456850100225/rjiA0tdh.jpg";
+          document.getElementById("fellas").appendChild(a);
+        })
+        var b2 = document.createElement("button");
+        b2.appendChild(document.createTextNode("Our Lord and Savior"));
+        document.body.appendChild(b2);
+        b2.addEventListener('click', function (){
+          var img=document.createElement("img");
+          img.src="https://pbs.twimg.com/profile_images/568108032203046912/nJIFRmHP_400x400.png";
+          document.getElementById("fellas").appendChild(img);
+          
+        })
+        var b3 = document.createElement("button");
+        b3.appendChild(document.createTextNode("Importance of computer science"));
+        document.body.appendChild(b3);
+        b3.addEventListener('click', function (){
+           var s = document.createElement("p");
+           s.appendChild(document.createTextNode("Computer Science has many real life applications.  Every major industry uses computers in one way or another.  Computers also run our economy as they handle stock and other asset exchange.  If these computers were to fail, then the economy would limp alongside the broken computers.  We also rely on technology for our livelihood.  We use google maps to get to a party where we post videos to Snapchat then call an Uber home, where we would watch Netflix and finally go to bed after checking social media once more."));
+           document.getElementById("fellas").appendChild(s);
+        })
+        var b4 = document.createElement("button");
+        b4.appendChild((document.createTextNode("Good learning resource")));
+        document.body.appendChild(b4);
+        b4.addEventListener('click', function() {
+            window.open("https://www.freecodecamp.org/");
+        })
+        var b5 = document.createElement("button");
+        b5.appendChild((document.createTextNode("Good reference website")));
+        document.body.appendChild(b5);
+        b5.addEventListener('click', function() {
+            window.open("https://stackoverflow.com/");
+        })
+        var b6 = document.createElement("button");
+        b6.appendChild((document.createTextNode("Not as good but begginer friendly CS reference")));
+        document.body.appendChild(b6);
+        b6.addEventListener('click', function() {
+            window.open("https://www.w3schools.com/");
+        })
+        
+      </script>
+      <div id="fellas">
+      </div>
+      <div id="container">
+      </div>
+    </body>
+</html>  

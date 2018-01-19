@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+    <html>
+    
+    <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+        </script>
+        <script>
+        var carsData=[];
+            $(document).ready(function() {
+                $.ajax({
+                    url: "https://data.cityofchicago.org/resource/suj7-cg3j.json?$select=vehicle_make_model,COUNT(vehicle_make_model)&$group=vehicle_make_model",
+                    success: function(result) {
+                        var output = "";
+                        $.each(result, function(index, value){
+                            carsData.push([value.vehicle_make_model, parseInt(value.COUNT_vehicle_make_model)]);
+                        });
+                        //$("#results").html(output);
+                    }
+                })
+                
+            });
+          google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(drawChart);
+    
+          function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string','Make');
+            data.addColumn('number', "no");
+            
+            for(var i = 0; i < carsData.length; i++){
+                data.addRow([carsData[i][0], carsData[i][1]]);
+                console.log("done")
+            }
+            console.log(data);
+            var options = {
+              title: 'Abandoned Vehicles'
+            };
+    
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+    
+            chart.draw(data, options);
+          }
+          
+          function numCars(){
+              var num=0;
+              for(var i=0; i<carsData.length; i++){
+                  num+=carsData[i][1];
+                  console.log(num)
+              }
+              console.log(num);
+              return num;
+          }
+          
+          
+          
+          function search(){
+              console.log(document.getElementById("search").value);
+              $("#display").html("");
+              var look, filter;
+              look = String(document.getElementById("search").value);
+              console.log(look);
+              filter=look.toLowerCase().replace(/\s+/g, '');
+              var carsSearch=carsData;
+              console.log(carsSearch.length);
+              if (look.length!=0){
+                  for(var i=0; i<carsSearch.length-1; i++){
+                      if(String(carsSearch[i][0]).replace(/\s+/g, '').toLowerCase().indexOf(filter)>-1){
+                          $("#display").append("<p>"+carsSearch[i][0]+ " "+(carsSearch[i][1]/numCars())*100 +"% </p>");
+                          console.log("found");
+                      }
+                  }
+          }     }
+          </script>
+    </head>
+
+    <body>
+        <div id="piechart" style="width: 900px; height: 500px;"></div>
+        <input id="search" onkeyup="search()" placeholder="Search for a car..."/>
+        <div id="display"></div>
+    </body>
+
+    </html>

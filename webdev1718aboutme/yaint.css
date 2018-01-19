@@ -1,0 +1,52 @@
+.nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: grey;
+}
+.nav_button {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+    float: left;
+}
+.sheeple {
+    width: 25%;
+    float: right;
+}
+body {
+    background: aquamarine !important;
+}
+img {
+    width: 200px;
+    
+}
+#fellas {
+    font-family: Comic;
+}
+
+a {
+    text-decoration: bold;
+}
+h1 {
+    text-align: center;
+}
+.button {
+    padding-left: 10%;
+    padding-right: 10%
+}
+
+body {
+    font-family: Helvetica;
+}
+#container {
+    width: 25%;
+}
+
+.center-text {
+    text-align: center;
+    font-size: 20px;
+}

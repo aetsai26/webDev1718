@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+        <head>
+        <title>About Me</title>
+        <link type="text/css" rel="stylesheet" href="yaint.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <ul class='nav'>
+            <li class='nav_button'><a href="home.html">home</a></li>
+            <li class='nav_button'><a href="inspiration.html">Computer Science</a></li>
+            <li class='nav_button'><a href="DIY.html">Journal</a></li>
+            <li class='nav_button'><a href="lacrosse.html">Lacrosse</a></li>
+        </ul>
+        <h1>The Home Page</h1>
+    </head>
+    <body>
+        <p>About me: </p>
+        <p>This is my submission for my first website of the 2017-2018 web development course, I hope you enjoy.</p>
+        <p>Here are my interest (click the picture):</p>
+        <script>
+            var sList = ["IMG_0275.JPG", 
+                        "http://www.trbimg.com/img-5852f27c/turbine/bal-lacrosse-officials-are-finally-addressing-the-sport-s-biggest-need-a-lacrosse-emoji-20161215",
+                        "https://www.mommygear.com/media/misc/steelers-logo.jpg", 
+                        "https://pbs.twimg.com/profile_images/426420605945004032/K85ZWV2F_400x400.png", 
+                        "https://pbs.twimg.com/profile_images/2957224906/f3a7509165585b723c3634b268ea9750_400x400.png"];
+            var tList = ["This isnt even my final form",
+                        "My favorite Sport is Lacrosse.  I have been playing lacrosse since I was in 7th grade.  In 8th grade, I decided to quit baseball and pursue Lacrosse in High School.", 
+                        "My favorite Sports team is the Pittsburgh Steelers.  I was raised a Steeler fan as my dad was born in Pittsburgh.  They also have six super bowls, the most in the NFL.", 
+                        "My favorite subject is computer science, but I used the java image as I feel that java's logo looks the best.", 
+                        "I have been at Lane for 4 years now and it is where I got my start in computer science and programming.  Now I know it is what I want to do in college and for a living."]
+            var img=document.createElement("img");
+            img.id="jS";
+            document.body.appendChild(img);
+            img.src = sList[0];
+            img.className=".img-circle";
+            var str = document.createElement("p");
+            str.id = "input";
+            document.body.appendChild(str);
+            document.getElementById("input").innerHTML=tList[0];
+            var count=0;
+            img.addEventListener("click", function() {
+                img.src=sList[(count+1)%4];
+                document.getElementById("input").innerHTML=tList[(count+1)%4];
+                count++;
+            $(document).ready(function(){
+            $('[data-toggle="popover"]').popover(); 
+            });
+            })
+        </script>
+    </body>
+</html>

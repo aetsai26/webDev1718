@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>One True Page</title>
+        <link type="text/css" rel="stylesheet" href="yaint.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <ul class='nav'>
+            <li class='nav_button'><a href="home.html">home</a></li>
+            <li class='nav_button'><a href="inspiration.html">Computer Science</a></li>
+            <li class='nav_button'><a href="DIY.html">Journal</a></li>
+            <li class='nav_button'><a href="lacrosse.html">Lacrosse</a></li>
+        </ul>
+    </head>
+    <body>
+        <h1>My life is boring, tell me about yours.</h1>
+        
+        <script type="text/javascript" >
+            var button = document.createElement("button");
+            button.appendChild(document.createTextNode("Tell me about yourself"));
+            document.body.appendChild(button);
+            var clearAll=document.createElement("button");
+            clearAll.appendChild(document.createTextNode("Clear All"));
+            document.body.appendChild(clearAll);
+            button.addEventListener("click", function() {
+                var journal = prompt("tell me about yourself");
+                var div=document.createElement("div");
+                var string = document.createElement("p");
+                div.className="p";
+                document.body.appendChild(div);
+                console.log(string.id)
+                if (journal==null || journal=="") {
+                    string.appendChild(document.createTextNode("you wrote nothing"));
+                    div.appendChild(string);
+                }
+                else {
+                    string.appendChild(document.createTextNode(journal));
+                    div.appendChild(string);
+                }
+
+                if(confirm("Change text color?")==true){
+                    document.body.style.color = genRgb(); 
+                }
+                var clear = document.createElement("button");
+                clear.setAttribute("id", string.id);
+                clear.setAttribute("class", "btn-warning")
+                clear.appendChild(document.createTextNode("clear"))
+                div.appendChild(clear);
+                
+                
+                function genRgb() {
+                        var str;
+                        var r = Math.ceil(Math.random()*255);
+                        var g = Math.ceil(Math.random()*255);
+                        var b = Math.ceil(Math.random()*255);
+                        return "rgb("+ r +", "+ g +", "+ b +")";
+                }
+        
+                clearAll.addEventListener("click", function(){
+                    if(confirm("are you sure")) {
+                        var pList=document.getElementsByClassName("p");
+                        for(var i=0; i<pList.length; i++){
+                        document.body.removeChild(pList[i]);
+                        }
+                    }
+                    else{
+                        //do nothing
+                    }
+                    if(confirm("clear colors?")==true) {
+                        document.body.style.backgroundColor = "aquamarine";
+                        document.body.style.color = "black";
+                
+                    }
+                });
+            clear.addEventListener("click", function(){
+               if(confirm("Are you sure?")==true){
+                  div.removeChild(string);
+                  div.removeChild(clear);
+                  document.removeChild(div);
+        
+                } 
+            });
+                function guid() {
+                  function s4() {
+                    return Math.floor((1 + Math.random()) * 0x10000)
+                      .toString(16)
+                      .substring(1);
+                  }
+                  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+                    s4() + '-' + s4() + s4() + s4();
+                }
+                
+                
+            });
+        </script>
+        
+        
+        
+        
+        
+    </body>
+</html>
