@@ -23,7 +23,7 @@
                         success: function(result) {
                             console.log(result);
                             $.each(result, function(index, value){
-                            console.log("start")
+                            console.log("start");
                             var tableRef = document.getElementById('jobBody'); 
                             var newRow   = tableRef.insertRow(tableRef.rows.length);
                             newRow.insertCell(0).appendChild(document.createTextNode(value.department));
@@ -33,7 +33,7 @@
                             
                         });
                         }
-                    })
+                    });
             });
         </script>
     </head>
