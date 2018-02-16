@@ -24,6 +24,7 @@
             var angle = 0;
             var angle2=0
             var color='green'
+            var radius=100
             var r=Math.floor((Math.random() * 155)+1)
             var g=Math.floor((Math.random() * 155)+1)
             var b=Math.floor((Math.random() * 155)+1)
@@ -38,6 +39,7 @@
                 console.log('run');
                 if(Math.cos(angle)==1){
                     angle=0;
+                    radius=Math.floor(Math.random() * 126+1)
                 }
                 //mainContext.clearRect(0, 0, canvasWidth, canvasHeight);
                  
@@ -48,7 +50,7 @@
                 // draw the circle
                 mainContext.beginPath();
                  
-                mainContext.arc(x, y, 100, 0, angle, false);
+                mainContext.arc(x, y, radius, 0, angle, false);
                 
                  
                 // color in the first circle
@@ -85,7 +87,7 @@
                     y=Math.floor(Math.random() * 451)
             }
             mainContext.beginPath();
-            mainContext.arc(x, y, (100/2), 0, angle2, false);  
+            mainContext.arc(x, y, (radius/2), 0, angle2, false);  
             mainContext.fillStyle='#EEEEEE';
             mainContext.fill();
             angle2 += Math.PI*2 / 180;
