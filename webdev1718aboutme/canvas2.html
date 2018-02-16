@@ -22,7 +22,13 @@
             var canvasHeight = mainCanvas.height;
              
             var angle = 0;
+            var angle2=0
             var color='green'
+            var r=Math.floor((Math.random() * 155)+1)
+            var g=Math.floor((Math.random() * 155)+1)
+            var b=Math.floor((Math.random() * 155)+1)
+            var x=Math.floor(Math.random() * 451)
+            var y=Math.floor(Math.random() * 451)
             var requestAnimationFrame = window.requestAnimationFrame || 
                                         window.mozRequestAnimationFrame || 
                                         window.webkitRequestAnimationFrame || 
@@ -30,33 +36,63 @@
              
             function drawCircle() {
                 console.log('run');
-                mainContext.clearRect(0, 0, canvasWidth, canvasHeight);
+                if(Math.cos(angle)==1){
+                    angle=0;
+                }
+                //mainContext.clearRect(0, 0, canvasWidth, canvasHeight);
                  
                 // color in the background
                 mainContext.fillStyle = "#EEEEEE";
-                mainContext.fillRect(0, 0, canvasWidth, canvasHeight);
+                //mainContext.fillRect(0, 0, canvasWidth, canvasHeight);
                  
                 // draw the circle
                 mainContext.beginPath();
-              
-                mainContext.arc(225, 225, 175, 0, angle, false);
-                mainContext.closePath();
                  
-                // color in the circle
-                if(Math.cos(angle)==1){
-                    color='#' + Math.random().toString(16).slice(2, 8).toUpperCase();
-                    console.log("1");
-                    angle=0;
-                }
+                mainContext.arc(x, y, 100, 0, angle, false);
+                
+                 
+                // color in the first circle
+                
+                
+    
                 mainContext.fillStyle=color;
                 mainContext.fill();
-                  
                 angle += Math.PI*2 / 180;
-                 
                 requestAnimationFrame(drawCircle);
+                var selector=Math.floor(Math.random() * 3)
+                if(r!=255&&g!=255&&b!=255){
+                    if(selector==0){
+                        r+=1;
+                    }
+                    else if(selector==1){
+                        g+=1;
+                    }
+                    else if(selector==2){
+                        b+=1;
+                    }
+                }
+                else{
+                    r=Math.floor((Math.random() * 155)+1)
+                    g=Math.floor((Math.random() * 155)+1)
+                    b=Math.floor((Math.random() * 155)+1)
+                }
+                color='rgb('+r+','+g+','+b+')';
+                mainContext.closePath();
+            //draw second circle
+            if(Math.cos(angle2)==1){
+                    angle2=0;
+                    x=Math.floor(Math.random() * 451)
+                    y=Math.floor(Math.random() * 451)
             }
-            drawCircle();
+            mainContext.beginPath();
+            mainContext.arc(x, y, (100/2), 0, angle2, false);  
+            mainContext.fillStyle='#EEEEEE';
+            mainContext.fill();
+            angle2 += Math.PI*2 / 180;
+            mainContext.closePath();
+            }
             
+            drawCircle();
         </script>
     </body>
 </html>
