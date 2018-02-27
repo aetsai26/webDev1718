@@ -102,7 +102,7 @@
                 y: yPosition
               };
             }       
-            canvas.addEventListener("mousemove", setMousePosition, false);
+            canvas.addEventListener("mousedown", setMousePosition, false);
  
             function setMousePosition(e) {
               paddleX = e.clientX - canvasPos.x;
