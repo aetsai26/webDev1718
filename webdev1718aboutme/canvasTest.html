@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+    <title>Simple Canvas Example</title>
+    <style>
+        canvas {
+            border: 3px #CCC solid;
+        }
+    </style>
+</head>
+ 
+    <body>
+        <div id="container">
+            <canvas id="myCanvas" height="450" width="450"></canvas>
+        </div>
+        <script>
+            var mainCanvas = document.getElementById("myCanvas");
+            var context = mainCanvas.getContext('2d');
+             
+            var canvasWidth = mainCanvas.width;
+            var canvasHeight = mainCanvas.height;
+             
+            context.moveTo(225,225);
+            context.arc(225,225,75,0,Math.pi*2);
+            context.lineTo(225,225);
+            context.stroke(); // or context.fill()
+            context.fillStyle='green';
+            context.fill();
+        </script>
+    </body>
+</html>

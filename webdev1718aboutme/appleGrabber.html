@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <body>
+    <canvas onclick="myFunction(event)" id="myCanvas" width="500" height="500" style="border:3px solid #000000;"></canvas>
+    <p id='time'></p>
+    <style type="text/css">
+        body{
+            background-size:cover;
+        }
+    </style>
+    <script>
+        
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+            var score=0;
+            var lives=3;
+            var randx=50;
+            var randy=50;
+            var time=30;
+            ctx.textAlign="center";
+            ctx.font="30px Arial";
+            ctx.fillText("Lives: "+lives, 60, 30);
+            ctx.fillText("Score: "+score, 250, 250);
+            ctx.fillRect(randx, randy, 50, 50);
+            var x= setInterval(function(){iterate()}, 1000);
+            function myFunction(event){
+                var xpos=event.clientX;
+                var ypos=event.clientY;
+                if (xpos>=randx && xpos<=randx+50 && ypos>=randy && ypos<=randy+50){
+                    score++;
+                } else {
+                    lives--;
+                
+                }
+                randx=Math.random()*450
+                randy=Math.random()*450
+            }
+            function iterate(){
+                ctx.clearRect(0,0,500,500);
+                ctx.fillText("Score: "+score, 250, 250);
+                ctx.fillText("Lives: "+lives, 60, 30);
+                ctx.fillRect(randx, randy, 50, 50);
+                end();
+                ctx.fillText("Time: "+time, 400, 30);
+                time--;
+            }
+            
+            function end(){
+                if(lives==0 || time==0){
+                    alert("game over");
+                    document.location.reload();
+                }
+                else if (score==20){
+                    alert("You won!");
+                    document.location.reload();
+                }
+            }
+    
+
+    </script>
+    </body>
+</html>
