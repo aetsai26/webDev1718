@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    
+    </head>
+    <body>
+        <video id="player" controls autoplay></video>
+        <button id="capture">Capture</button>
+        <canvas id="canvas" width=320 height=240></canvas>
+        <div id="album"></div>
+        <script>
+            const player = document.getElementById('player');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+            const captureButton = document.getElementById('capture');
+            var images=[];
+            var album=document.getElementById("album");
+            var resume=true;
+            const constraints = {
+                video: true,
+            };
+            captureButton.addEventListener('click', () => {
+                if(resume){
+                    console.log(images);
+                    context.drawImage(player,0,0,canvas.width,canvas.height);
+                    var photo=document.createElement("img");
+                    photo.setAttribute("src", canvas.toDataURL());
+                    photo.setAttribute("style", "display: none");
+                    images.push(photo);
+                    album.appendChild(document.createElement("br"))
+                    var form=document.createElement("div");
+                    var name=document.createElement("input");
+                    name.setAttribute("type","text");
+                    var submit=document.createElement("input");
+                    submit.setAttribute("type", "submit");
+                    form.appendChild(name);
+                    form.appendChild(submit);
+                    album.appendChild(form);
+                    resume=false;
+                    submit.addEventListener("click", function(){
+                        resume=true;
+                        var link=document.createElement("a");
+                        link.setAttribute("href", "#");
+                        link.setAttribute("id", images.length-1);
+                        link.innerHTML=name.value;
+                        while(form.firstChild){
+                            form.removeChild(form.firstChild);
+                        }
+                        form.appendChild(link);
+                        link.addEventListener("click", function(){
+                            console.log(this.id);
+                            drawPicture(this.id);
+                        });
+                    });
+                }
+                else{
+                    alert("add a name");
+                }
+            });
+            function drawPicture(index){
+                console.log(images[index]);
+                context.clearRect(0,0,canvas.width,canvas.height);
+                context.drawImage(images[index], 0, 0, canvas.width, canvas.height);
+            }
+            navigator.mediaDevices.getUserMedia(constraints)
+            .then((stream) => {
+                // Attach the video stream to the video element and autoplay.
+                player.srcObject = stream;
+            });
+        </script>
+    </body>
+</html>
