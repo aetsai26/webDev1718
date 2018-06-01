@@ -24,8 +24,12 @@
             var album=document.getElementById("album");
             var resume=true;
             const constraints = {
-                video: true,
-            };
+                 audio: false,
+                 video: {
+                     facingMode: 'user'
+                 }
+            }
+
             var map;
             var bounds;
             var markers =[];
