@@ -85,18 +85,13 @@
                 context.drawImage(images[index], 0, 0, canvas.width, canvas.height);
             }
             
-            if(isMobile==false){
-                navigator.mediaDevices.getUserMedia(constraints)
-                .then((stream) => {
-                    // Attach the video stream to the video element and autoplay.
-                    player.srcObject = stream;
-                });
-            }
-            else{
-                player=document.createElement("input");
-                player.setAttribute("type", "image/*")
-                player.setAttribute("capture", "camera")
-            }
+            
+            navigator.mediaDevices.getUserMedia(constraints)
+            .then((stream) => {
+                // Attach the video stream to the video element and autoplay.
+                player.srcObject = stream;
+            });
+            
             
             
             function initMap() {
