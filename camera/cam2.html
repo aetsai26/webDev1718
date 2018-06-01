@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-    
+        <style type="text/css">
+            #map{
+                width: 300px;
+                height: 300px;
+            }
+        </style>
     </head>
     <body>
         <video id="player" controls autoplay></video>
         <button id="capture">Capture</button>
+        <div id="map" width=320 height=240></div>
         <canvas id="canvas" width=320 height=240></canvas>
         <div id="album"></div>
         <script>
@@ -19,6 +25,9 @@
             const constraints = {
                 video: true,
             };
+            var map;
+            var bounds;
+            var markers =[];
             captureButton.addEventListener('click', () => {
                 if(resume){
                     console.log(images);
@@ -52,7 +61,10 @@
                             drawPicture(this.id);
                         });
                     });
+                
+                    position();
                 }
+                
                 else{
                     alert("add a name");
                 }
@@ -67,6 +79,44 @@
                 // Attach the video stream to the video element and autoplay.
                 player.srcObject = stream;
             });
+            function initMap() {
+                bounds = new google.maps.LatLngBounds();  
+                map = new google.maps.Map(document.getElementById('map'), {
+                  zoom: 1,
+                  center: {lat: 0, lng: 0}
+                });
+                var geocoder = new google.maps.Geocoder();
+            }
+            function position() {
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                      lat: position.coords.latitude,
+                      lng: position.coords.longitude
+                    };
+                    placeMarker(pos);
+                  }, function() {
+                    alert("something went wrong");
+                  });
+                } else {
+                  // Browser doesn't support Geolocation
+                  alert("browser doesnt support geolocation");
+                }
+            }
+            function placeMarker(pos) {
+                var marker = new google.maps.Marker({
+                        map: map,
+                        position: pos
+                        });
+                        markers.push(marker);
+                        bounds.extend(marker.position);
+                        map.fitBounds(bounds);
+            }
+            
+            google.maps.event.addDomListener(window, 'load', init);
+        </script>
+        <script 
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDTN46ExouYC1Mr_zIyoEhR37uWW_CC-Y&callback=initMap">
         </script>
     </body>
 </html>

@@ -1,67 +1,135 @@
 <!DOCTYPE html>
 <html>
     <head>
-        
+        <style type="text/css">
+            #map{
+                width: 300px;
+                height: 300px;
+            }
+        </style>
     </head>
     <body>
-      <video id="player" controls autoplay></video>
-      <button id="capture">Capture</button>
-      <canvas id="canvas" width=320 height=240></canvas>
-      <div id="album"></div>
-      <script>
-        const player = document.getElementById('player');
-        const canvas = document.getElementById('canvas');
-        const context = canvas.getContext('2d');
-        const captureButton = document.getElementById('capture');
-        var images=[];
-        var album=document.getElementById("album");
-        const constraints = {
-          video: true,
-        };
-        
-      
-        captureButton.addEventListener('click', () => {
-          console.log(images);
-          context.drawImage(player,0,0,canvas.width,canvas.height);
-          var photo=document.createElement("img");
-          photo.setAttribute("src", canvas.toDataURL());
-          photo.setAttribute("style", "display: none");
-          images.push(photo);
-          album.appendChild(document.createElement("br"));
-          var form=document.createElement("div");
-          var name=document.createElement("input");
-          name.setAttribute("type","text");
-          var submit=document.createElement("input");
-          submit.setAttribute("type", "submit");
-          form.appendChild(name);
-          form.appendChild(submit);
-          album.appendChild(form);
-          submit.addEventListener("click", function(){
-             var link=document.createElement("a");
-             link.setAttribute("href", "#");
-             link.setAttribute("id", images.length-1);
-             link.innerHTML=name.value;
-             while(form.firstChild){
-                 form.removeChild(form.firstChild);
-          }
-             form.appendChild(link);
-             link.addEventListener("click", function(){
-                console.log(this.id);
-                drawPicture(this.id);
-             });
-          });
-        });
-        function drawPicture(index){
-          console.log(images[index]);
-          context.clearRect(0,0,canvas.width,canvas.height);
-          context.drawImage(images[index], 0, 0, canvas.width, canvas.height);
-        }
-      
-        navigator.mediaDevices.getUserMedia(constraints)
-          .then((stream) => {
-            // Attach the video stream to the video element and autoplay.
-            player.srcObject = stream;
-          });
-      </script>
+        <video id="player" controls autoplay></video>
+        <button id="capture">Capture</button>
+        <button id="goFS">Go fullscreen</button>
+        <div id="map" width=320 height=240></div>
+        <canvas id="canvas" width=320 height=240></canvas>
+        <div id="album"></div>
+        <script>
+            const player = document.getElementById('player');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+            const captureButton = document.getElementById('capture');
+            var images=[];
+            var album=document.getElementById("album");
+            var resume=true;
+            const constraints = {
+                video: true,
+            };
+            var map;
+            var bounds;
+            var markers =[];
+            var geocoder;
+            captureButton.addEventListener('click', () => {
+                if(resume){
+                    console.log(images);
+                    context.drawImage(player,0,0,canvas.width,canvas.height);
+                    var photo=document.createElement("img");
+                    photo.setAttribute("src", canvas.toDataURL());
+                    photo.setAttribute("style", "display: none");
+                    images.push(photo);
+                    album.appendChild(document.createElement("br"))
+                    var form=document.createElement("div");
+                    var name=document.createElement("input");
+                    name.setAttribute("type","text");
+                    var submit=document.createElement("input");
+                    submit.setAttribute("type", "submit");
+                    form.appendChild(name);
+                    form.appendChild(submit);
+                    album.appendChild(form);
+                    resume=false;
+                    submit.addEventListener("click", function(){
+                        resume=true;
+                        var link=document.createElement("a");
+                        link.setAttribute("href", "#");
+                        link.setAttribute("id", images.length-1);
+                        link.innerHTML=name.value;
+                        geocodeAddress(geocoder, map, link.innerHTML);
+                        while(form.firstChild){
+                            form.removeChild(form.firstChild);
+                        }
+                        form.appendChild(link);
+                        link.addEventListener("click", function(){
+                            console.log(this.id);
+                            drawPicture(this.id);
+                        });
+                    });
+                
+                }
+                
+                else{
+                    alert("add a location");
+                }
+            });
+            function drawPicture(index){
+                console.log(images[index]);
+                context.clearRect(0,0,canvas.width,canvas.height);
+                context.drawImage(images[index], 0, 0, canvas.width, canvas.height);
+            }
+            navigator.mediaDevices.getUserMedia(constraints)
+            .then((stream) => {
+                // Attach the video stream to the video element and autoplay.
+                player.srcObject = stream;
+            });
+            function initMap() {
+                bounds = new google.maps.LatLngBounds();  
+                map = new google.maps.Map(document.getElementById('map'), {
+                  zoom: 1,
+                  center: {lat: 0, lng: 0}
+                });
+                geocoder = new google.maps.Geocoder();
+            }
+            function geocodeAddress(geocoder, resultsMap, address) {
+              geocoder.geocode({
+                'address': address,
+              }, function(results, status) {
+              if (status === 'OK') {
+                resultsMap.setCenter(results[0].geometry.location);
+                var marker = new google.maps.Marker({
+                  map: resultsMap,
+                  position: results[0].geometry.location
+                });
+                markers.push(marker);
+                bounds.extend(marker.position);
+                resultsMap.fitBounds(bounds);
+              } else {
+              alert('Geocode was not successful for the following reason: ' + status);
+              }
+              });
+            }
+            
+            var goFS = document.getElementById("goFS");
+            goFS.addEventListener("click", function() {
+                  toggleFullScreen();
+             }, false);
+              
+              function toggleFullScreen() {
+                  var doc = window.document;
+                  var docEl = doc.documentElement;
+                
+                  var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+                  var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+                
+                  if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+                    requestFullScreen.call(docEl);
+                  }
+                  else {
+                    cancelFullScreen.call(doc);
+                  }
+                }
+        </script>
+        <script 
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDTN46ExouYC1Mr_zIyoEhR37uWW_CC-Y&callback=initMap">
+        </script>
     </body>
 </html>
