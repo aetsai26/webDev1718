@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <div id="dial">
+            <input type="text" id="number">
+            <button id="call">call</button>
+        </div>
+        <script type="text/javascript">
+            var submit=document.getElementById("call");
+            var number=document.getElementById("number");
+            submit.addEventListener("click", function(){
+                var link=document.createElement("a");
+                link.setAttribute("href", "tel:"+number.value)
+                console.log(link);
+                link.click();
+                
+            })
+        </script>
+    </body>
+</html>

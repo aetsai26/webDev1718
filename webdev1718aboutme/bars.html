@@ -69,7 +69,6 @@
                   for(var i=0; i<carsSearch.length-1; i++){
                       if(String(carsSearch[i][0]).replace(/\s+/g, '').toLowerCase().indexOf(filter)>-1){
                           $("#display").append("<p>"+carsSearch[i][0]+ " "+ carsSearch[i][1] +" "+((carsSearch[i][1]/numCars())*100).toFixed(1) +"% </p>");
-                          console.log("found");
                       }
                   }
           }     }
