@@ -28,6 +28,7 @@
             var map;
             var bounds;
             var markers =[];
+            var infoWindow;
             captureButton.addEventListener('click', () => {
                 if(resume){
                     console.log(images);
@@ -59,6 +60,10 @@
                         link.addEventListener("click", function(){
                             console.log(this.id);
                             drawPicture(this.id);
+                            if(markers[images.length-1]!=null){
+                            
+                            }
+                            
                         });
                     });
                 
@@ -86,6 +91,7 @@
                   center: {lat: 0, lng: 0}
                 });
                 var geocoder = new google.maps.Geocoder();
+                infowindow = new google.maps.InfoWindow;
             }
             function position() {
                 if (navigator.geolocation) {
